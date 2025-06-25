@@ -30,6 +30,13 @@ jobs:
         run: npm install
       - name: Build code
         run: npm run build
+      - name : Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-files
+          path: |
+            build
+            package.json 
   deploy:
     needs: build
     runs-on: ubuntu-latest
