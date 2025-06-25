@@ -34,9 +34,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dist-files
-          path: |
-            build
-            package.json 
+          path: build 
   deploy:
     needs: build
     runs-on: ubuntu-latest
