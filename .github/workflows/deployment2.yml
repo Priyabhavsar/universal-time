@@ -1,5 +1,8 @@
 name: Deployment exersice 2
-on: push
+on: 
+  push:
+    branches:
+    - main
 env:
   REACT_APP_BACKEND: https://abc.xyz.com
 jobs:
@@ -18,11 +21,14 @@ jobs:
       - name: Lint code
         run: echo "linting the code"
   test:
+    environment : Testing
     needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: get-code
         uses: actions/checkout@v3
+      - name: read react app backend variable
+        run: echo ${{ secrets.REACT_APP_BACKEND }}
       - name: Install dependencies
         run: npm install
       - name: Test code
