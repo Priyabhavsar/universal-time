@@ -3,8 +3,6 @@ on:
   push:
     branches:
     - main
-env:
-  REACT_APP_BACKEND: https://abc.xyz.com
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -12,12 +10,14 @@ jobs:
       - name: get-code
         uses: actions/checkout@v3
       - name: Cache dependencies
+        id : cache
         uses: actions/cache@v4
         with:
-          path: ~/.npm
+          path: node_modules
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
-        run: npm install
+        if : steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
       - name: Lint code
         run: echo "linting the code"
   test:
