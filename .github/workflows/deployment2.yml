@@ -1,5 +1,7 @@
 name: Deployment exersice 2
 on: push
+env : 
+  REACT_APP_BACKEND : https://abc.xyz.com
 jobs:
   lint: 
     runs-on: ubuntu-latest
@@ -46,6 +48,8 @@ jobs:
           name: dist-files
           path: build 
   deploy:
+    env : 
+      PORT : 3000
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -57,5 +61,9 @@ jobs:
         run : ls
       - name : Output filename
         run : echo "${{needs.build.outputs.script-file}}"
+      - name : read environment variable
+        run : echo $PORT
+      - name : read react app backend variable
+        run : echo $REACT_APP_BACKEND
       - name: Deploy code
         run: echo "deploying the code"
